@@ -28,7 +28,6 @@ export default class TaskListComponent {
    * Component method to trigger the pinTask event
    */
   pinTask(id: string) {
-    debugger;
     this.store.pinTask(new PinTask(id));
   }
 }

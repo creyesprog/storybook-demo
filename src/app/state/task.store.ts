@@ -37,6 +37,13 @@ export class PinTask {
   constructor(public payload: string) {}
 }
 
+// The class definition for our error field
+export class AppError {
+  static readonly type = 'APP_ERROR';
+
+  constructor(public payload: boolean) {}
+}
+
 export const TasksStore = signalStore(
   withState(initialState),
   withComputed(({ tasks }) => ({
@@ -46,16 +53,14 @@ export const TasksStore = signalStore(
     pinTask: (pinTask: PinTask) => {
       const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);
       if (taskToPin) {
-        const archivedTask: Task = {
+        const pinnedTask: Task = {
           ...taskToPin,
-          state: 'TASK_ARCHIVED',
+          state: 'TASK_PINNED',
         };
-
-        debugger;
 
         const updatedTasks = store.tasks().map((task) =>
           task.id === pinTask.payload ?
-            archivedTask :
+            pinnedTask :
             task
         );
 
@@ -82,6 +87,11 @@ export const TasksStore = signalStore(
           tasks: updatedTasks,
         }));
       }
+    },
+    setAppError: (appError: AppError) => {
+      patchState(store, (state) => ({
+        error: !state.error,
+      }));
     },
   }))
 );

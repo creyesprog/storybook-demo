@@ -9,7 +9,6 @@ import PureTaskListComponent from './pure-task-list.component';
 import TaskComponent from './task.component';
 
 import * as TaskStories from './task.stories';
-import { TasksStore } from '../state/task.store';
 
 const meta: Meta<PureTaskListComponent> = {
   component: PureTaskListComponent,
@@ -20,7 +19,6 @@ const meta: Meta<PureTaskListComponent> = {
       //👇 Imports both components to allow component composition with Storybook
       declarations: [PureTaskListComponent, TaskComponent],
       imports: [CommonModule],
-      providers: [TasksStore]
     }),
     //👇 Wraps our stories with a decorator
     componentWrapperDecorator(

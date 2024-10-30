@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Task } from '../models/task.model';
-import { TasksStore } from '../state/task.store';
 
 @Component({
   selector: 'app-pure-task-list',
@@ -33,8 +32,6 @@ import { TasksStore } from '../state/task.store';
   `,
 })
 export default class PureTaskListComponent {
-  readonly store = inject(TasksStore);
-
   /**
    * @ignore
    * Component property to define ordering of tasks

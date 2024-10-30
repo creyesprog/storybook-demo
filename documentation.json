@@ -65,13 +65,85 @@
     "interceptors": [],
     "classes": [
         {
-            "name": "ArchiveTask",
-            "id": "class-ArchiveTask-67e26a0067430b6319a915cfad4565c62d77e6709418896977278d91ac651add2bcb677349c49828d82df63d2c7cb875126a76c1c7e06dab002f551f98151f7c",
+            "name": "AppError",
+            "id": "class-AppError-00cb7743d1863d15c7473d1852934214fc50feff1d79a292352f7c4b1afc5c600d49fb8fba5f4e79e986b725d4eebb86dcbc3b546ca07571d9220d8de1620d18",
             "file": "src/app/state/task.store.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import {\r\n  patchState,\r\n  signalStore,\r\n  withComputed,\r\n  withMethods,\r\n  withState,\r\n} from '@ngrx/signals';\r\nimport { Task } from '../models/task.model';\r\nimport { computed } from '@angular/core';\r\n\r\ntype TasksState = {\r\n  tasks: Task[];\r\n  status: 'idle' | 'loading' | 'success' | 'error';\r\n  error: boolean;\r\n};\r\n\r\nconst initialState: TasksState = {\r\n  tasks: [\r\n    { id: '1', title: 'Something', state: 'TASK_INBOX' },\r\n    { id: '2', title: 'Something more', state: 'TASK_INBOX' },\r\n    { id: '3', title: 'Something else', state: 'TASK_INBOX' },\r\n    { id: '4', title: 'Something again', state: 'TASK_INBOX' },\r\n  ],\r\n  status: 'idle',\r\n  error: false,\r\n};\r\n\r\nexport class ArchiveTask {\r\n  static readonly type = 'ARCHIVE_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\nexport class PinTask {\r\n  static readonly type = 'PIN_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\nexport const TasksStore = signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n  }))\r\n);\r\n",
+            "sourceCode": "import {\r\n  patchState,\r\n  signalStore,\r\n  withComputed,\r\n  withMethods,\r\n  withState,\r\n} from '@ngrx/signals';\r\nimport { Task } from '../models/task.model';\r\nimport { computed } from '@angular/core';\r\n\r\ntype TasksState = {\r\n  tasks: Task[];\r\n  status: 'idle' | 'loading' | 'success' | 'error';\r\n  error: boolean;\r\n};\r\n\r\nconst initialState: TasksState = {\r\n  tasks: [\r\n    { id: '1', title: 'Something', state: 'TASK_INBOX' },\r\n    { id: '2', title: 'Something more', state: 'TASK_INBOX' },\r\n    { id: '3', title: 'Something else', state: 'TASK_INBOX' },\r\n    { id: '4', title: 'Something again', state: 'TASK_INBOX' },\r\n  ],\r\n  status: 'idle',\r\n  error: false,\r\n};\r\n\r\nexport class ArchiveTask {\r\n  static readonly type = 'ARCHIVE_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\nexport class PinTask {\r\n  static readonly type = 'PIN_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\n// The class definition for our error field\r\nexport class AppError {\r\n  static readonly type = 'APP_ERROR';\r\n\r\n  constructor(public payload: boolean) {}\r\n}\r\n\r\n\r\nexport const TasksStore = signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        debugger;\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    setAppError: (appError: AppError) => {\r\n      patchState(store, (state) => ({\r\n        error: !state.error,\r\n      }));\r\n    },\r\n  }))\r\n);\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "boolean",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 42,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "boolean",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "inputsClass": [],
+            "outputsClass": [],
+            "properties": [
+                {
+                    "name": "payload",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 44,
+                    "modifierKind": [
+                        125
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "'APP_ERROR'",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 42,
+                    "modifierKind": [
+                        126,
+                        148
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "extends": [],
+            "hostBindings": [],
+            "hostListeners": []
+        },
+        {
+            "name": "ArchiveTask",
+            "id": "class-ArchiveTask-00cb7743d1863d15c7473d1852934214fc50feff1d79a292352f7c4b1afc5c600d49fb8fba5f4e79e986b725d4eebb86dcbc3b546ca07571d9220d8de1620d18",
+            "file": "src/app/state/task.store.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "class",
+            "sourceCode": "import {\r\n  patchState,\r\n  signalStore,\r\n  withComputed,\r\n  withMethods,\r\n  withState,\r\n} from '@ngrx/signals';\r\nimport { Task } from '../models/task.model';\r\nimport { computed } from '@angular/core';\r\n\r\ntype TasksState = {\r\n  tasks: Task[];\r\n  status: 'idle' | 'loading' | 'success' | 'error';\r\n  error: boolean;\r\n};\r\n\r\nconst initialState: TasksState = {\r\n  tasks: [\r\n    { id: '1', title: 'Something', state: 'TASK_INBOX' },\r\n    { id: '2', title: 'Something more', state: 'TASK_INBOX' },\r\n    { id: '3', title: 'Something else', state: 'TASK_INBOX' },\r\n    { id: '4', title: 'Something again', state: 'TASK_INBOX' },\r\n  ],\r\n  status: 'idle',\r\n  error: false,\r\n};\r\n\r\nexport class ArchiveTask {\r\n  static readonly type = 'ARCHIVE_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\nexport class PinTask {\r\n  static readonly type = 'PIN_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\n// The class definition for our error field\r\nexport class AppError {\r\n  static readonly type = 'APP_ERROR';\r\n\r\n  constructor(public payload: boolean) {}\r\n}\r\n\r\n\r\nexport const TasksStore = signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        debugger;\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    setAppError: (appError: AppError) => {\r\n      patchState(store, (state) => ({\r\n        error: !state.error,\r\n      }));\r\n    },\r\n  }))\r\n);\r\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -138,12 +210,12 @@
         },
         {
             "name": "PinTask",
-            "id": "class-PinTask-67e26a0067430b6319a915cfad4565c62d77e6709418896977278d91ac651add2bcb677349c49828d82df63d2c7cb875126a76c1c7e06dab002f551f98151f7c",
+            "id": "class-PinTask-00cb7743d1863d15c7473d1852934214fc50feff1d79a292352f7c4b1afc5c600d49fb8fba5f4e79e986b725d4eebb86dcbc3b546ca07571d9220d8de1620d18",
             "file": "src/app/state/task.store.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import {\r\n  patchState,\r\n  signalStore,\r\n  withComputed,\r\n  withMethods,\r\n  withState,\r\n} from '@ngrx/signals';\r\nimport { Task } from '../models/task.model';\r\nimport { computed } from '@angular/core';\r\n\r\ntype TasksState = {\r\n  tasks: Task[];\r\n  status: 'idle' | 'loading' | 'success' | 'error';\r\n  error: boolean;\r\n};\r\n\r\nconst initialState: TasksState = {\r\n  tasks: [\r\n    { id: '1', title: 'Something', state: 'TASK_INBOX' },\r\n    { id: '2', title: 'Something more', state: 'TASK_INBOX' },\r\n    { id: '3', title: 'Something else', state: 'TASK_INBOX' },\r\n    { id: '4', title: 'Something again', state: 'TASK_INBOX' },\r\n  ],\r\n  status: 'idle',\r\n  error: false,\r\n};\r\n\r\nexport class ArchiveTask {\r\n  static readonly type = 'ARCHIVE_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\nexport class PinTask {\r\n  static readonly type = 'PIN_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\nexport const TasksStore = signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n  }))\r\n);\r\n",
+            "sourceCode": "import {\r\n  patchState,\r\n  signalStore,\r\n  withComputed,\r\n  withMethods,\r\n  withState,\r\n} from '@ngrx/signals';\r\nimport { Task } from '../models/task.model';\r\nimport { computed } from '@angular/core';\r\n\r\ntype TasksState = {\r\n  tasks: Task[];\r\n  status: 'idle' | 'loading' | 'success' | 'error';\r\n  error: boolean;\r\n};\r\n\r\nconst initialState: TasksState = {\r\n  tasks: [\r\n    { id: '1', title: 'Something', state: 'TASK_INBOX' },\r\n    { id: '2', title: 'Something more', state: 'TASK_INBOX' },\r\n    { id: '3', title: 'Something else', state: 'TASK_INBOX' },\r\n    { id: '4', title: 'Something again', state: 'TASK_INBOX' },\r\n  ],\r\n  status: 'idle',\r\n  error: false,\r\n};\r\n\r\nexport class ArchiveTask {\r\n  static readonly type = 'ARCHIVE_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\nexport class PinTask {\r\n  static readonly type = 'PIN_TASK';\r\n\r\n  constructor(public payload: string) {}\r\n}\r\n\r\n// The class definition for our error field\r\nexport class AppError {\r\n  static readonly type = 'APP_ERROR';\r\n\r\n  constructor(public payload: boolean) {}\r\n}\r\n\r\n\r\nexport const TasksStore = signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        debugger;\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    setAppError: (appError: AppError) => {\r\n      patchState(store, (state) => ({\r\n        error: !state.error,\r\n      }));\r\n    },\r\n  }))\r\n);\r\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -479,6 +551,60 @@
             "extends": []
         },
         {
+            "name": "InboxScreenComponent",
+            "id": "component-InboxScreenComponent-908f02bf2e519f0f5b13cc25a0a3450ca7923515190233a1e03298a1fc8dbdce0b9262f74d66d77a4e43058449ca82aa46e82ae4f3c45d33482384033f77577b",
+            "file": "src/app/components/inbox-screen.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [
+                {
+                    "name": "TasksStore"
+                }
+            ],
+            "selector": "app-inbox-screen",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<app-pure-inbox-screen [error]=\"store.error() | async\"></app-pure-inbox-screen>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "store",
+                    "defaultValue": "Inject(TasksStore)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13,
+                    "modifierKind": [
+                        148
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Inject } from '@angular/core';\r\nimport { TasksStore } from '../state/task.store';\r\n\r\n@Component({\r\n  selector: 'app-inbox-screen',\r\n  template: `\r\n    <app-pure-inbox-screen [error]=\"store.error() | async\"></app-pure-inbox-screen>\r\n  `,\r\n  providers: [TasksStore],\r\n})\r\nexport default class InboxScreenComponent {\r\n  readonly store = Inject(TasksStore);\r\n}\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": []
+        },
+        {
             "name": "PageComponent",
             "id": "component-PageComponent-f5d2fd9ba0ee70c24f514ef21ebdae50beb2e2f42594802a96cdbeb02a59371897162b6be17fcb45cdc0d237d3e4bee611d1ad1d446a54e0699ba35b48991b87",
             "file": "src/stories/page.component.ts",
@@ -560,6 +686,50 @@
                     "styleUrl": "./page.css"
                 }
             ],
+            "stylesData": "",
+            "extends": []
+        },
+        {
+            "name": "PureInboxScreenComponent",
+            "id": "component-PureInboxScreenComponent-83709e49f1db882460f32d1e38375901fddda36bcb65c9341fa024fe212f3d05ebd8f7e6e89a1e06c3727a2a47c355bdad1c41e478b0db73838933cb3d448bff",
+            "file": "src/app/components/pure-inbox-screen.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-pure-inbox-screen",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<div *ngIf=\"error\" class=\"page lists-show\">\n  <div class=\"wrapper-message\">\n    <span class=\"icon-face-sad\"></span>\n    <p class=\"title-message\">Oh no!</p>\n    <p class=\"subtitle-message\">Something went wrong</p>\n  </div>\n</div>\n\n<div *ngIf=\"!error\" class=\"page lists-show\">\n  <nav>\n    <h1 class=\"title-page\">Taskbox</h1>\n  </nav>\n  <app-task-list></app-task-list>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "name": "error",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 24,
+                    "type": "any",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": false,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-pure-inbox-screen',\r\n  template: `\r\n    <div *ngIf=\"error\" class=\"page lists-show\">\r\n      <div class=\"wrapper-message\">\r\n        <span class=\"icon-face-sad\"></span>\r\n        <p class=\"title-message\">Oh no!</p>\r\n        <p class=\"subtitle-message\">Something went wrong</p>\r\n      </div>\r\n    </div>\r\n\r\n    <div *ngIf=\"!error\" class=\"page lists-show\">\r\n      <nav>\r\n        <h1 class=\"title-page\">Taskbox</h1>\r\n      </nav>\r\n      <app-task-list></app-task-list>\r\n    </div>\r\n  `,\r\n})\r\nexport default class PureInboxScreenComponent {\r\n  @Input() error: any;\r\n}\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
             "stylesData": "",
             "extends": []
         },
@@ -745,13 +915,17 @@
         },
         {
             "name": "TaskListComponent",
-            "id": "component-TaskListComponent-ef7961639fed969ecf64eb9da03d29e5684f774726611c46d6e2f8dddaaa64c6de627c17ff0a2286aef46ae2dd8be188d42596287dbc488d86d16d61e69bb3a8",
+            "id": "component-TaskListComponent-690083d8c9788fe547725f4a694c40724c8dbaa7c183ea703fad5fe511c8b7c9073cd1d08485ee8499736b14aa0bd86a18af290b011235828d72c04045106f82",
             "file": "src/app/components/task-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
-            "providers": [],
+            "providers": [
+                {
+                    "name": "TasksStore"
+                }
+            ],
             "selector": "app-task-list",
             "styleUrls": [],
             "styles": [],
@@ -771,7 +945,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 17,
+                    "line": 18,
                     "modifierKind": [
                         148
                     ]
@@ -791,7 +965,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 22,
+                    "line": 23,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nComponent method to trigger the archiveTask event\n",
@@ -821,7 +995,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 29,
+                    "line": 30,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nComponent method to trigger the pinTask event\n",
@@ -848,7 +1022,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, inject } from '@angular/core';\r\nimport { ArchiveTask, PinTask } from '../state/task.store';\r\nimport { TasksStore } from '../state/task.store';\r\n\r\n@Component({\r\n  selector: 'app-task-list',\r\n  template: `\r\n    <app-pure-task-list\r\n      [tasks]=\"store.tasks()\"\r\n      (onArchiveTask)=\"archiveTask($event)\"\r\n      (onPinTask)=\"pinTask($event)\"\r\n    ></app-pure-task-list>\r\n  `,\r\n})\r\nexport default class TaskListComponent {\r\n  readonly store = inject(TasksStore);\r\n\r\n  /**\r\n   * Component method to trigger the archiveTask event\r\n   */\r\n  archiveTask(id: string) {\r\n    this.store.archiveTask(new ArchiveTask(id));\r\n  }\r\n\r\n  /**\r\n   * Component method to trigger the pinTask event\r\n   */\r\n  pinTask(id: string) {\r\n    this.store.pinTask(new PinTask(id));\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, inject } from '@angular/core';\r\nimport { ArchiveTask, PinTask } from '../state/task.store';\r\nimport { TasksStore } from '../state/task.store';\r\n\r\n@Component({\r\n  selector: 'app-task-list',\r\n  template: `\r\n    <app-pure-task-list\r\n      [tasks]=\"store.tasks()\"\r\n      (onArchiveTask)=\"archiveTask($event)\"\r\n      (onPinTask)=\"pinTask($event)\"\r\n    ></app-pure-task-list>\r\n  `,\r\n  providers: [TasksStore],\r\n})\r\nexport default class TaskListComponent {\r\n  readonly store = inject(TasksStore);\r\n\r\n  /**\r\n   * Component method to trigger the archiveTask event\r\n   */\r\n  archiveTask(id: string) {\r\n    this.store.archiveTask(new ArchiveTask(id));\r\n  }\r\n\r\n  /**\r\n   * Component method to trigger the pinTask event\r\n   */\r\n  pinTask(id: string) {\r\n    debugger;\r\n    this.store.pinTask(new PinTask(id));\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -858,13 +1032,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-2ec58e7a32463b9b6cd970cb31e08e29029a47873b1b978b2bb334fc7975f6f5b3557f06f1d8edb8d9117c1bc37b26d4301c2a5e8ccced6f4a56dde5c6a98af4",
+            "id": "module-AppModule-3c92be000cc5b31c42a8e3a01cd720b01e3fe689fb7258685494d84e001fbf4bef2a7dbbca966ac8264a23064baddaac9b6c5e530feab8b3745f38d061d172cb",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppComponent } from './app.component';\n\n@NgModule({\n  declarations: [\n    AppComponent\n  ],\n  imports: [\n    BrowserModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
+            "sourceCode": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\n\nimport { AppComponent } from './app.component';\nimport PureInboxScreenComponent from './components/pure-inbox-screen.component';\nimport InboxScreenComponent from './components/inbox-screen.component';\n\n@NgModule({\n  declarations: [\n    AppComponent,\n    PureInboxScreenComponent,\n    InboxScreenComponent\n  ],\n  imports: [\n    BrowserModule\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
             "children": [
                 {
                     "type": "providers",
@@ -875,6 +1049,12 @@
                     "elements": [
                         {
                             "name": "AppComponent"
+                        },
+                        {
+                            "name": "InboxScreenComponent"
+                        },
+                        {
+                            "name": "PureInboxScreenComponent"
                         }
                     ]
                 },
@@ -902,13 +1082,13 @@
         },
         {
             "name": "TaskModule",
-            "id": "module-TaskModule-889f699f5909ed3f050beff5ef9ab431c2122a1cd11381c3fdd3d85cea1f887703f8ed9bb6d51569511eef8d5ea0722cb2887d10520c25c5280fc9e03d065f39",
+            "id": "module-TaskModule-d70c94c4fe8c7476ba124716efc11d59e2cb2460d0651d12dc89e34ca2d010718bc016f1534345f8cefd58d26d1d5839a46b706bf7177b5beb5264dcf4c7281f",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/components/task.module.ts",
             "methods": [],
-            "sourceCode": "\r\nimport { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\n\r\nimport TaskComponent from './task.component';\r\nimport TaskListComponent from './task-list.component';\r\nimport PureTaskListComponent from './pure-task-list.component';\r\n\r\n@NgModule({\r\n  imports: [CommonModule],\r\n  exports: [TaskComponent, TaskListComponent],\r\n  declarations: [TaskComponent, TaskListComponent, PureTaskListComponent],\r\n  providers: [],\r\n})\r\nexport class TaskModule {}\r\n",
+            "sourceCode": "\r\nimport { NgModule } from '@angular/core';\r\nimport { CommonModule } from '@angular/common';\r\n\r\nimport TaskComponent from './task.component';\r\nimport TaskListComponent from './task-list.component';\r\nimport PureTaskListComponent from './pure-task-list.component';\r\nimport { TasksStore } from '../state/task.store';\r\nimport PureInboxScreenComponent from './pure-inbox-screen.component';\r\nimport InboxScreenComponent from './inbox-screen.component';\r\n\r\n@NgModule({\r\n  imports: [CommonModule],\r\n  exports: [TaskComponent, TaskListComponent],\r\n  declarations: [TaskComponent, TaskListComponent, PureTaskListComponent],\r\n  providers: [TasksStore],\r\n})\r\nexport class TaskModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -994,7 +1174,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n  }))\r\n)"
+                "defaultValue": "signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        debugger;\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    setAppError: (appError: AppError) => {\r\n      patchState(store, (state) => ({\r\n        error: !state.error,\r\n      }));\r\n    },\r\n  }))\r\n)"
             }
         ],
         "functions": [],
@@ -1056,7 +1236,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n  }))\r\n)"
+                    "defaultValue": "signalStore(\r\n  withState(initialState),\r\n  withComputed(({ tasks }) => ({\r\n    getError: computed(() => 'something'),\r\n  })),\r\n  withMethods((store) => ({\r\n    pinTask: (pinTask: PinTask) => {\r\n      const taskToPin = store.tasks().find((task) => task.id === pinTask.payload);\r\n      if (taskToPin) {\r\n        const archivedTask: Task = {\r\n          ...taskToPin,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        debugger;\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === pinTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    archiveTask: (archiveTask: ArchiveTask) => {\r\n      const taskToArchive = store.tasks().find((task) => task.id === archiveTask.payload);\r\n      if (taskToArchive) {\r\n        const archivedTask: Task = {\r\n          ...taskToArchive,\r\n          state: 'TASK_ARCHIVED',\r\n        };\r\n\r\n        const updatedTasks = store.tasks().map((task) =>\r\n          task.id === archiveTask.payload ?\r\n            archivedTask :\r\n            task\r\n        );\r\n\r\n        patchState(store, (state) => ({\r\n          tasks: updatedTasks,\r\n        }));\r\n      }\r\n    },\r\n    setAppError: (appError: AppError) => {\r\n      patchState(store, (state) => ({\r\n        error: !state.error,\r\n      }));\r\n    },\r\n  }))\r\n)"
                 }
             ]
         },
@@ -1080,7 +1260,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 9,
+        "count": 8,
         "status": "low",
         "files": [
             {
@@ -1088,6 +1268,24 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "AppComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/inbox-screen.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "InboxScreenComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/pure-inbox-screen.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "PureInboxScreenComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/2",
                 "status": "low"
@@ -1124,6 +1322,15 @@
                 "type": "interface",
                 "linktype": "interface",
                 "name": "Task",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/state/task.store.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "AppError",
                 "coveragePercent": 0,
                 "coverageCount": "0/4",
                 "status": "low"
