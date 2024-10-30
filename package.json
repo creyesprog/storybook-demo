@@ -2,10 +2,13 @@
   "name": "taskbox",
   "version": "0.2.0",
   "description": "Starter template to get up and running quickly with Angular and Storybook",
-  "author": "Chromatic <https://chromatic.com/>",
+  "author": {
+    "name": "Chromatic",
+    "email": "https://chromatic.com/"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chromaui/intro-storybook-angular-template"
+    "url": "git+https://github.com/chromaui/intro-storybook-angular-template.git"
   },
   "bugs": {
     "url": "https://github.com/chromaui/intro-storybook-angular-template/issues"
@@ -20,7 +23,8 @@
     "test-storybook": "test-storybook --url http://localhost:6006 --watch",
     "storybook": "ng run taskbox:storybook",
     "build-storybook": "ng run taskbox:build-storybook",
-    "init-msw": "msw init src/"
+    "init-msw": "msw init src/",
+    "chromatic": "npx chromatic --project-token=chpt_e43157cd25efaa4"
   },
   "private": true,
   "dependencies": {
@@ -51,6 +55,7 @@
     "@storybook/test": "^8.3.6",
     "@storybook/test-runner": "^0.19.1",
     "@types/jasmine": "~5.1.4",
+    "chromatic": "^11.16.3",
     "jasmine-core": "~5.4.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
@@ -61,5 +66,6 @@
     "msw-storybook-addon": "^2.0.3",
     "storybook": "^8.3.6",
     "typescript": "~5.4.0"
-  }
+  },
+  "homepage": "https://github.com/chromaui/intro-storybook-angular-template#readme"
 }
