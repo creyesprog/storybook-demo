@@ -52,11 +52,12 @@ export const Archived: Story = {
   },
 };
 
-export const Test: Story = {
+const longTitleString = `This is a really long string and I hope I don't reach the end of this component because if I do something bad will probably happen right? Maybe if we just keep going a little farther...`;
+export const LongTitle: Story = {
   args: {
     task: {
       ...Default.args?.task,
-      state: 'TASK_TEST',
+      title: longTitleString,
     },
   },
-}
+};
