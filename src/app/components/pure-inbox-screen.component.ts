@@ -9,6 +9,7 @@ import { Component, Input } from '@angular/core';
         <span class="icon-face-sad"></span>
         <p class="title-message">Oh no!</p>
         <p class="subtitle-message">Something went wrong</p>
+        <p>Is there an error here: {{ error }}</p>
       </div>
     </div>
 
