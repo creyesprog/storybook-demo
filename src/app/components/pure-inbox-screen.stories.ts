@@ -1,8 +1,6 @@
 
 import type { Meta, StoryObj } from '@storybook/angular';
 
-import { importProvidersFrom } from '@angular/core';
-
 import { TasksStore } from '../state/task.store';
 
 import { moduleMetadata, applicationConfig } from '@storybook/angular';

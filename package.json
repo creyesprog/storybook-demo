@@ -17,6 +17,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "jest --no-cache",
+    "test-storybook": "test-storybook --url http://localhost:6006 --watch",
     "storybook": "ng run taskbox:storybook",
     "build-storybook": "ng run taskbox:build-storybook",
     "init-msw": "msw init src/"
@@ -48,6 +49,7 @@
     "@storybook/angular": "^8.3.6",
     "@storybook/blocks": "^8.3.6",
     "@storybook/test": "^8.3.6",
+    "@storybook/test-runner": "^0.19.1",
     "@types/jasmine": "~5.1.4",
     "jasmine-core": "~5.4.0",
     "karma": "~6.4.4",
