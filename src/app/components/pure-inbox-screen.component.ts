@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
       <div class="wrapper-message">
         <span class="icon-face-sad"></span>
         <p class="title-message">Oh no!</p>
-        <p class="subtitle-message">Something went wrong</p>
+        <p class="subtitle-message">Something went wrong.</p>
       </div>
     </div>
 
