@@ -36,7 +36,7 @@ export const Default: Story = {
     design: {
       type: 'figspec',
       url: 'https://www.figma.com/design/vvJB5o5ctFL4oIRIaie8TW/Storybook?node-id=2-3&t=qJLTVFdKWWc9emiJ-4',
-      accessToken: 'figd_RXV7NfwgZKRkKF9Kn76MrtZ30YLT47otVPp436Te',
+      accessToken: process.env["FIGMA_ACCESS_TOKEN"],
     },
   },
 };
