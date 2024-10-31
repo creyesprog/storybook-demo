@@ -5,13 +5,13 @@ import { Task } from '../models/task.model';
   selector: 'app-pure-task-list',
   template: `
     <div class="list-items">
-      <app-task
+      <app-pure-task
         *ngFor="let task of tasksInOrder"
         [task]="task"
         (onArchiveTask)="onArchiveTask.emit($event)"
         (onPinTask)="onPinTask.emit($event)"
       >
-      </app-task>
+      </app-pure-task>
       <div
         *ngIf="tasksInOrder.length === 0 && !loading"
         class="wrapper-message"
@@ -48,15 +48,10 @@ export default class PureTaskListComponent {
 
   @Input()
   set tasks(arr: Task[]) {
-    const initialTasks = [
+    const filteredTasks = [
       ...arr.filter((t) => t.state === 'TASK_PINNED'),
       ...arr.filter((t) => t.state !== 'TASK_PINNED'),
     ];
-    const filteredTasks = initialTasks.filter(
-      (t) => t.state === 'TASK_INBOX' || t.state === 'TASK_PINNED'
-    );
-    this.tasksInOrder = filteredTasks.filter(
-      (t) => t.state === 'TASK_INBOX' || t.state === 'TASK_PINNED'
-    );
+    this.tasksInOrder = filteredTasks;
   }
 }

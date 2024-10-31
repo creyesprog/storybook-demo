@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 
 import { fn } from '@storybook/test';
 
-import TaskComponent from './task.component';
+import TaskComponent from './pure-task.component';
 
 export const ActionsData = {
   onArchiveTask: fn(),
@@ -11,7 +11,7 @@ export const ActionsData = {
 };
 
 const meta: Meta<TaskComponent> = {
-  title: 'Task',
+  title: 'Pure Task',
   component: TaskComponent,
   //👇 Our exports that end in "Data" are not stories.
   excludeStories: /.*Data$/,
@@ -32,9 +32,17 @@ export const Default: Story = {
       state: 'TASK_INBOX',
     },
   },
+  parameters: {
+    design: {
+      type: 'figspec',
+      url: 'https://www.figma.com/design/vvJB5o5ctFL4oIRIaie8TW/Storybook?node-id=2-3&t=qJLTVFdKWWc9emiJ-4',
+      // accessToken: process.env.FIGMA_ACCESS_TOKEN,
+    },
+  },
 };
 
 export const Pinned: Story = {
+  ...Default,
   args: {
     task: {
       ...Default.args?.task,
@@ -44,6 +52,7 @@ export const Pinned: Story = {
 };
 
 export const Archived: Story = {
+  ...Default,
   args: {
     task: {
       ...Default.args?.task,
@@ -56,14 +65,11 @@ const longTitleString = `This is a really long string and I hope I don't reach t
   bad will probably happen right? Maybe if we just keep going a little farther maybe this string will finally reach the and and then
   maybe we'll see something bad happen but I'm not sure`;
 export const LongTitle: Story = {
+  ...Default,
   args: {
     task: {
       ...Default.args?.task,
       title: longTitleString,
     },
-  },
-  parameters: {
-    type: 'figma',
-    url: 'https://www.figma.com/design/vvJB5o5ctFL4oIRIaie8TW/Storybook?t=Ud2R3rD1axpwrwW0-1',
   },
 };

@@ -6,9 +6,9 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
 
 import PureTaskListComponent from './pure-task-list.component';
-import TaskComponent from './task.component';
+import TaskComponent from './pure-task.component';
 
-import * as TaskStories from './task.stories';
+import * as TaskStories from './pure-task.stories';
 
 const meta: Meta<PureTaskListComponent> = {
   component: PureTaskListComponent,

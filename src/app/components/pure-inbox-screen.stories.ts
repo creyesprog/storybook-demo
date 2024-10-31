@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 
 import PureInboxScreenComponent from './pure-inbox-screen.component';
 
-import { TaskModule } from './task.module';
+import { TaskModule } from './pure-task.module';
 
 const meta: Meta<PureInboxScreenComponent> = {
   component: PureInboxScreenComponent,
@@ -38,7 +38,7 @@ export const Error: Story = {
   },
 };
 
- export const WithInteractions: Story = {
+ export const PinInteraction: Story = {
    play: async ({ canvasElement }) => {
      const canvas = within(canvasElement);
      // Simulates pinning the first task
@@ -47,3 +47,14 @@ export const Error: Story = {
      await fireEvent.click(canvas.getByLabelText('pinTask-3'));
    },
  };
+
+ export const PinAndArchiveInteraction: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Simulates pinning the first task
+    await fireEvent.click(canvas.getByLabelText('pinTask-1'));
+    // Simulates pinning the third task
+    await fireEvent.click(canvas.getByTestId('checked-2'));
+    //
+  },
+};

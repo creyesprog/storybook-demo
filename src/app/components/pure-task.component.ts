@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task.model';
 
 @Component({
-  selector: 'app-task',
+  selector: 'app-pure-task',
   template: `
     <div class="list-item {{ task?.state }}">
       <label
@@ -18,7 +18,7 @@ import { Task } from '../models/task.model';
           name="checked-{{ task?.id }}"
           id="checked-{{ task?.id }}"
         />
-        <span class="checkbox-custom" (click)="onArchive(task?.id)"></span>
+        <span class="checkbox-custom" (click)="onArchive(task?.id)" [attr.data-testid]="'checked-' + task?.id"></span>
       </label>
       <label
         [attr.aria-label]="task?.title + ''"
