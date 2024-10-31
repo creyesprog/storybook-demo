@@ -3,16 +3,16 @@ import type { Meta, StoryObj } from '@storybook/angular';
 
 import { fn } from '@storybook/test';
 
-import TaskComponent from './pure-task.component';
+import PureTaskComponent from './pure-task.component';
 
 export const ActionsData = {
   onArchiveTask: fn(),
   onPinTask: fn(),
 };
 
-const meta: Meta<TaskComponent> = {
-  title: 'Pure Task',
-  component: TaskComponent,
+const meta: Meta<PureTaskComponent> = {
+  title: 'PureTask',
+  component: PureTaskComponent,
   //👇 Our exports that end in "Data" are not stories.
   excludeStories: /.*Data$/,
   tags: ['autodocs'],
@@ -22,7 +22,7 @@ const meta: Meta<TaskComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<TaskComponent>;
+type Story = StoryObj<PureTaskComponent>;
 
 export const Default: Story = {
   args: {

@@ -45,7 +45,7 @@ import { Task } from '../models/task.model';
     </div>
   `,
 })
-export default class TaskComponent {
+export default class PureTaskComponent {
   /**
    * The shape of the task object
   */

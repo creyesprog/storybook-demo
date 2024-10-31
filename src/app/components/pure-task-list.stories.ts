@@ -6,7 +6,7 @@ import { componentWrapperDecorator, moduleMetadata } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
 
 import PureTaskListComponent from './pure-task-list.component';
-import TaskComponent from './pure-task.component';
+import PureTaskComponent from './pure-task.component';
 
 import * as TaskStories from './pure-task.stories';
 
@@ -17,7 +17,7 @@ const meta: Meta<PureTaskListComponent> = {
   decorators: [
     moduleMetadata({
       //👇 Imports both components to allow component composition with Storybook
-      declarations: [PureTaskListComponent, TaskComponent],
+      declarations: [PureTaskListComponent, PureTaskComponent],
       imports: [CommonModule],
     }),
     //👇 Wraps our stories with a decorator

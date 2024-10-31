@@ -1,11 +1,10 @@
-
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { TasksStore } from '../state/task.store';
 
 import { moduleMetadata, applicationConfig } from '@storybook/angular';
 
- import { fireEvent, within } from '@storybook/test';
+import { fireEvent, within } from '@storybook/test';
 
 import { CommonModule } from '@angular/common';
 
@@ -30,31 +29,65 @@ const meta: Meta<PureInboxScreenComponent> = {
 export default meta;
 type Story = StoryObj<PureInboxScreenComponent>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  parameters: {
+    design: {
+      type: 'figspec',
+      url: 'https://www.figma.com/design/vvJB5o5ctFL4oIRIaie8TW/Storybook?node-id=32-41&t=MS7cM2xE4lfCTurm-4',
+      accessToken: process.env["FIGMA_ACCESS_TOKEN"],
+    },
+  },
+};
 
 export const Error: Story = {
+  ...Default,
   args: {
     error: true,
   },
 };
 
- export const PinInteraction: Story = {
-   play: async ({ canvasElement }) => {
-     const canvas = within(canvasElement);
-     // Simulates pinning the first task
-     await fireEvent.click(canvas.getByLabelText('pinTask-1'));
-     // Simulates pinning the third task
-     await fireEvent.click(canvas.getByLabelText('pinTask-3'));
-   },
- };
+export const PinOne: Story = {
+  ...Default,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Simulates pinning the first task
+    await fireEvent.click(canvas.getByLabelText('pinTask-1'));
+    // Simulates pinning the third task
+    await fireEvent.click(canvas.getByLabelText('pinTask-3'));
+  },
+};
 
- export const PinAndArchiveInteraction: Story = {
+export const PinOneAndArchiveOne: Story = {
+  ...Default,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     // Simulates pinning the first task
     await fireEvent.click(canvas.getByLabelText('pinTask-1'));
     // Simulates pinning the third task
     await fireEvent.click(canvas.getByTestId('checked-2'));
+    //
+  },
+};
+
+export const PinAll: Story = {
+  ...Default,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await fireEvent.click(canvas.getByLabelText('pinTask-1'));
+    await fireEvent.click(canvas.getByLabelText('pinTask-2'));
+    await fireEvent.click(canvas.getByLabelText('pinTask-3'));
+    await fireEvent.click(canvas.getByLabelText('pinTask-4'));
+  },
+};
+
+export const ArchiveAll: Story = {
+  ...Default,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await fireEvent.click(canvas.getByTestId('checked-1'));
+    await fireEvent.click(canvas.getByTestId('checked-2'));
+    await fireEvent.click(canvas.getByTestId('checked-3'));
+    await fireEvent.click(canvas.getByTestId('checked-4'));
     //
   },
 };

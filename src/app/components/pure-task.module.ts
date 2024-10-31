@@ -2,13 +2,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import TaskComponent from './pure-task.component';
+import PureTaskComponent from './pure-task.component';
 import TaskListComponent from './task-list.component';
 import PureTaskListComponent from './pure-task-list.component';
 
 @NgModule({
   imports: [CommonModule],
-  exports: [TaskComponent, TaskListComponent],
-  declarations: [TaskComponent, TaskListComponent, PureTaskListComponent],
+  exports: [PureTaskComponent, TaskListComponent],
+  declarations: [PureTaskComponent, TaskListComponent, PureTaskListComponent],
 })
 export class TaskModule {}
