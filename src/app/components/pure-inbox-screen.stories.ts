@@ -4,7 +4,7 @@ import { TasksStore } from '../state/task.store';
 
 import { moduleMetadata, applicationConfig } from '@storybook/angular';
 
-import { fireEvent, within } from '@storybook/test';
+import { fireEvent, waitFor, within, expect } from '@storybook/test';
 
 import { CommonModule } from '@angular/common';
 
@@ -77,6 +77,11 @@ export const PinAll: Story = {
     await fireEvent.click(canvas.getByLabelText('pinTask-2'));
     await fireEvent.click(canvas.getByLabelText('pinTask-3'));
     await fireEvent.click(canvas.getByLabelText('pinTask-4'));
+
+    await waitFor(expectPinnedIconsToBe4);
+    async function expectPinnedIconsToBe4() {
+      expect(canvas.getAllByTestId('icon-star').length).toBe(4)
+    }
   },
 };
 

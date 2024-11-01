@@ -40,7 +40,7 @@ import { Task } from '../models/task.model';
         [attr.aria-label]="'pinTask-' + task?.id"
         (click)="onPin(task?.id)"
       >
-        <span class="icon-star"></span>
+        <span class="icon-star" data-testid='icon-star'></span>
       </button>
     </div>
   `,
