@@ -33,7 +33,7 @@ export const Default: Story = {
   parameters: {
     design: {
       type: 'figspec',
-      url: 'https://www.figma.com/design/vvJB5o5ctFL4oIRIaie8TW/Storybook?node-id=32-41&t=MS7cM2xE4lfCTurm-4',
+      url: 'https://www.figma.com/design/vvJB5o5ctFL4oIRIaie8TW/Storybook?node-id=36-12&t=iMXkahU8GsWpUg7N-4',
       accessToken: process.env["FIGMA_ACCESS_TOKEN"],
     },
   },
